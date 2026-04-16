@@ -1,0 +1,1141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IBI Mobile Contact — India Business International</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0D1B2A;
+    --navy-mid: #142236;
+    --navy-light: #1E3350;
+    --cyan: #00D4F0;
+    --cyan2: #29ABE2;
+    --cyan-dim: rgba(0,212,240,0.12);
+    --cyan-border: rgba(0,212,240,0.25);
+    --text: #E8F4F8;
+    --text-dim: #7B9BAD;
+    --success: #00E5A0;
+    --warn: #FFB84D;
+    --error: #FF6B6B;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  
+  body {
+    font-family: 'IBM Plex Sans', sans-serif;
+    background: var(--navy);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Background grid */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(0,212,240,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,212,240,0.04) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .page-wrap { position: relative; z-index: 1; max-width: 960px; margin: 0 auto; padding: 0 24px 80px; }
+
+  /* ── HEADER ── */
+  header {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    padding: 28px 0 24px;
+    border-bottom: 1px solid var(--cyan-border);
+    margin-bottom: 40px;
+  }
+  .logo-box {
+    width: 48px; height: 48px;
+    background: var(--navy-light);
+    border: 1.5px solid var(--cyan-border);
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .logo-dot-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 3px; padding: 8px; }
+  .dot { width: 5px; height: 5px; border-radius: 50%; background: var(--cyan); opacity: 0.7; }
+  .dot.bright { opacity: 1; }
+  header h1 { font-family: 'Syne', sans-serif; font-size: 22px; font-weight: 800; color: var(--text); letter-spacing: -0.3px; }
+  header h1 span { color: var(--cyan); }
+  header p { font-size: 12px; color: var(--text-dim); font-family: 'IBM Plex Mono', monospace; margin-top: 3px; }
+  .header-badge {
+    margin-left: auto;
+    background: var(--cyan-dim);
+    border: 1px solid var(--cyan-border);
+    border-radius: 6px;
+    padding: 4px 10px;
+    font-size: 11px;
+    color: var(--cyan);
+    font-family: 'IBM Plex Mono', monospace;
+    white-space: nowrap;
+  }
+
+  /* ── SECTION TITLES ── */
+  .section-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--cyan);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .section-label::after { content: ''; flex: 1; height: 1px; background: var(--cyan-border); }
+
+  /* ── CARDS ── */
+  .card {
+    background: var(--navy-mid);
+    border: 1px solid var(--cyan-border);
+    border-radius: 14px;
+    padding: 24px;
+    margin-bottom: 24px;
+    position: relative;
+    overflow: hidden;
+  }
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--cyan), transparent);
+    opacity: 0.4;
+  }
+
+  /* ── STEPS ── */
+  .steps { display: flex; flex-direction: column; gap: 16px; }
+  .step {
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+    padding: 16px 18px;
+    background: rgba(0,0,0,0.2);
+    border: 1px solid var(--cyan-border);
+    border-radius: 10px;
+    transition: border-color 0.2s;
+  }
+  .step:hover { border-color: var(--cyan); }
+  .step-num {
+    width: 32px; height: 32px;
+    background: linear-gradient(135deg, var(--cyan), var(--cyan2));
+    color: var(--navy);
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 14px;
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .step-content h3 { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 14px; margin-bottom: 5px; }
+  .step-content p { font-size: 13px; color: var(--text-dim); line-height: 1.6; }
+  .step-content code {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    background: var(--cyan-dim);
+    border: 1px solid var(--cyan-border);
+    padding: 2px 6px;
+    border-radius: 4px;
+    color: var(--cyan);
+  }
+
+  /* ── BOOKMARKLET DROP ZONE ── */
+  .bookmarklet-zone {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    padding: 32px;
+    background: rgba(0,0,0,0.25);
+    border: 2px dashed var(--cyan-border);
+    border-radius: 12px;
+    text-align: center;
+    margin: 24px 0;
+  }
+  .bookmarklet-zone p { color: var(--text-dim); font-size: 13px; }
+  .bookmarklet-zone p strong { color: var(--text); }
+  
+  .bm-btn-wrap { display: flex; flex-direction: column; align-items: center; gap: 10px; }
+  #bookmarklet-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 28px;
+    background: linear-gradient(135deg, var(--cyan), var(--cyan2));
+    color: var(--navy);
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 15px;
+    border-radius: 10px;
+    text-decoration: none;
+    cursor: grab;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 4px 20px rgba(0,212,240,0.3);
+    -webkit-user-drag: element;
+  }
+  #bookmarklet-link:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(0,212,240,0.4); }
+  #bookmarklet-link:active { cursor: grabbing; }
+  .bm-hint {
+    font-size: 12px;
+    color: var(--text-dim);
+    font-family: 'IBM Plex Mono', monospace;
+    background: var(--cyan-dim);
+    border: 1px solid var(--cyan-border);
+    padding: 8px 14px;
+    border-radius: 6px;
+  }
+
+  /* ── GAS CONFIG ── */
+  .config-row { display: flex; gap: 10px; align-items: center; margin-bottom: 12px; }
+  .input-wrap { flex: 1; position: relative; }
+  .input-wrap label {
+    display: block;
+    font-size: 11px;
+    color: var(--text-dim);
+    font-family: 'IBM Plex Mono', monospace;
+    margin-bottom: 6px;
+    letter-spacing: 0.5px;
+  }
+  input[type=text], textarea {
+    width: 100%;
+    background: rgba(0,0,0,0.3);
+    border: 1px solid var(--cyan-border);
+    border-radius: 8px;
+    color: var(--text);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    padding: 10px 14px;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  input[type=text]:focus, textarea:focus { border-color: var(--cyan); }
+  
+  #numbers-area {
+    height: 240px;
+    resize: vertical;
+    font-size: 12px;
+    line-height: 1.7;
+  }
+
+  /* ── BUTTONS ── */
+  .btn {
+    padding: 10px 20px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 13px;
+    transition: all 0.2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    white-space: nowrap;
+  }
+  .btn-primary {
+    background: linear-gradient(135deg, var(--cyan), var(--cyan2));
+    color: var(--navy);
+  }
+  .btn-primary:hover { box-shadow: 0 4px 16px rgba(0,212,240,0.35); transform: translateY(-1px); }
+  .btn-outline {
+    background: var(--cyan-dim);
+    border: 1px solid var(--cyan-border);
+    color: var(--cyan);
+  }
+  .btn-outline:hover { background: rgba(0,212,240,0.2); border-color: var(--cyan); }
+  .btn-danger {
+    background: rgba(255,107,107,0.1);
+    border: 1px solid rgba(255,107,107,0.3);
+    color: var(--error);
+  }
+  .btn-danger:hover { background: rgba(255,107,107,0.2); }
+  .btn:disabled { opacity: 0.4; cursor: not-allowed; transform: none !important; }
+
+  .btn-row { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 14px; }
+
+  /* ── STATS ROW ── */
+  .stats-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 24px; }
+  .stat-box {
+    background: rgba(0,0,0,0.2);
+    border: 1px solid var(--cyan-border);
+    border-radius: 10px;
+    padding: 16px;
+    text-align: center;
+  }
+  .stat-box .val {
+    font-family: 'Syne', sans-serif;
+    font-size: 26px;
+    font-weight: 800;
+    color: var(--cyan);
+    line-height: 1;
+    margin-bottom: 6px;
+    font-variant-numeric: tabular-nums;
+  }
+  .stat-box .lbl { font-size: 11px; color: var(--text-dim); font-family: 'IBM Plex Mono', monospace; }
+
+  /* ── STATUS BAR ── */
+  #status-bar {
+    padding: 10px 16px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-family: 'IBM Plex Mono', monospace;
+    background: var(--cyan-dim);
+    border: 1px solid var(--cyan-border);
+    color: var(--cyan);
+    margin-bottom: 16px;
+    display: none;
+    animation: fadeIn 0.3s ease;
+  }
+  #status-bar.success { background: rgba(0,229,160,0.1); border-color: rgba(0,229,160,0.3); color: var(--success); }
+  #status-bar.error { background: rgba(255,107,107,0.1); border-color: rgba(255,107,107,0.3); color: var(--error); }
+  #status-bar.warn { background: rgba(255,184,77,0.1); border-color: rgba(255,184,77,0.3); color: var(--warn); }
+  
+  /* ── CONTACT TABLE ── */
+  .table-wrap { overflow-x: auto; border-radius: 10px; border: 1px solid var(--cyan-border); }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  thead tr { background: rgba(0,212,240,0.08); }
+  th {
+    padding: 12px 16px;
+    text-align: left;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--cyan);
+    border-bottom: 1px solid var(--cyan-border);
+    white-space: nowrap;
+  }
+  td {
+    padding: 10px 16px;
+    border-bottom: 1px solid rgba(0,212,240,0.07);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    color: var(--text);
+  }
+  tr:last-child td { border-bottom: none; }
+  tbody tr:hover td { background: var(--cyan-dim); }
+  .badge {
+    font-size: 10px;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-family: 'IBM Plex Mono', monospace;
+  }
+  .badge-new { background: rgba(0,229,160,0.15); color: var(--success); border: 1px solid rgba(0,229,160,0.3); }
+  .badge-dup { background: rgba(255,184,77,0.15); color: var(--warn); border: 1px solid rgba(255,184,77,0.3); }
+
+  /* ── PROGRESS ── */
+  .progress-wrap { margin: 12px 0; }
+  .progress-bar {
+    height: 4px;
+    background: rgba(0,212,240,0.15);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--cyan), var(--cyan2));
+    border-radius: 2px;
+    transition: width 0.3s ease;
+    width: 0%;
+  }
+  .progress-text { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--text-dim); margin-top: 6px; }
+
+  /* ── COLLAPSIBLE SECTIONS ── */
+  .collapsible-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    padding: 16px 20px;
+    border-radius: 10px;
+    background: rgba(0,0,0,0.2);
+    border: 1px solid var(--cyan-border);
+    margin-bottom: 12px;
+    transition: border-color 0.2s;
+  }
+  .collapsible-header:hover { border-color: var(--cyan); }
+  .collapsible-header h3 { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 14px; }
+  .collapsible-arrow { color: var(--cyan); font-size: 12px; transition: transform 0.2s; }
+  .collapsible-arrow.open { transform: rotate(90deg); }
+  .collapsible-body { display: none; padding: 16px 0; }
+  .collapsible-body.open { display: block; }
+
+  /* ── GAS CODE BLOCK ── */
+  .code-block {
+    background: rgba(0,0,0,0.4);
+    border: 1px solid var(--cyan-border);
+    border-radius: 10px;
+    padding: 18px 20px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11.5px;
+    line-height: 1.7;
+    color: #a8d8e8;
+    overflow-x: auto;
+    white-space: pre;
+    max-height: 400px;
+    overflow-y: auto;
+    position: relative;
+  }
+  .code-block .kw { color: var(--cyan); font-weight: 600; }
+  .code-block .str { color: #a8e6a8; }
+  .code-block .cm { color: #5a7a8a; font-style: italic; }
+  .copy-code-btn {
+    position: absolute;
+    top: 10px; right: 10px;
+    padding: 5px 12px;
+    background: var(--cyan-dim);
+    border: 1px solid var(--cyan-border);
+    color: var(--cyan);
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 11px;
+    font-family: 'IBM Plex Mono', monospace;
+  }
+
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: none; } }
+  @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.5; } }
+  .pulsing { animation: pulse 1.5s infinite; }
+
+  /* Mobile */
+  @media (max-width: 640px) {
+    .stats-row { grid-template-columns: repeat(2,1fr); }
+    header h1 { font-size: 18px; }
+    .bookmarklet-zone { padding: 20px; }
+  }
+</style>
+</head>
+<body>
+<div class="page-wrap">
+
+  <!-- HEADER -->
+  <header>
+    <div class="logo-box">
+      <div class="logo-dot-grid">
+        <div class="dot bright"></div><div class="dot"></div><div class="dot bright"></div><div class="dot"></div>
+        <div class="dot"></div><div class="dot bright"></div><div class="dot"></div><div class="dot bright"></div>
+        <div class="dot bright"></div><div class="dot"></div><div class="dot bright"></div><div class="dot"></div>
+        <div class="dot"></div><div class="dot bright"></div><div class="dot"></div><div class="dot bright"></div>
+      </div>
+    </div>
+    <div>
+      <h1>IBI Mobile <span>Contact</span></h1>
+      <p>India Business International · WhatsApp Group Extractor</p>
+    </div>
+    <div class="header-badge" id="db-status">⬤ Offline</div>
+  </header>
+
+  <!-- STATS ROW -->
+  <div class="stats-row">
+    <div class="stat-box"><div class="val" id="stat-total">0</div><div class="lbl">Total Contacts</div></div>
+    <div class="stat-box"><div class="val" id="stat-new">0</div><div class="lbl">Added Today</div></div>
+    <div class="stat-box"><div class="val" id="stat-dup">0</div><div class="lbl">Duplicates Skipped</div></div>
+    <div class="stat-box"><div class="val" id="stat-groups">0</div><div class="lbl">Groups Processed</div></div>
+  </div>
+
+  <!-- STEP 1: CONSOLE METHOD -->
+  <div class="section-label">Step 01 — Run Extractor on WhatsApp Web</div>
+  <div class="card">
+
+    <!-- Alert banner -->
+    <div style="background:rgba(0,229,160,0.08);border:1.5px solid rgba(0,229,160,0.4);border-radius:10px;padding:14px 18px;margin-bottom:22px;display:flex;gap:12px;align-items:flex-start">
+      <span style="font-size:20px;flex-shrink:0">✅</span>
+      <div>
+        <p style="font-family:'Syne',sans-serif;font-weight:700;font-size:13px;color:var(--success);margin-bottom:4px">Most Reliable Method — Chrome DevTools Console</p>
+        <p style="font-size:12px;color:var(--text-dim);line-height:1.6">No bookmarklet needed. Just copy the script below, go to WhatsApp Web, open the browser console, paste and press Enter. Works 100% every time.</p>
+      </div>
+    </div>
+
+    <!-- Steps -->
+    <div class="steps" style="margin-bottom:22px">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <h3>Copy the Extractor Script below</h3>
+          <p>Click the <strong style="color:var(--cyan)">📋 Copy Extractor Script</strong> button below. The full script will be copied to your clipboard.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <h3>Go to WhatsApp Web — Open Group Info — Scroll to Participants</h3>
+          <p>Open <code>web.whatsapp.com</code> → open your group → click the group name at top → Group Info panel opens on right → scroll down until phone numbers are visible in the Participants section.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <h3>Open Chrome DevTools Console</h3>
+          <p>While on the WhatsApp Web page, press <code>F12</code> on your keyboard. A panel opens at the bottom or right of the screen. Click the <strong>Console</strong> tab at the top of that panel.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-content">
+          <h3>Paste the script and press Enter</h3>
+          <p>Click anywhere inside the Console panel. Press <code>Ctrl+V</code> to paste. Then press <code>Enter</code>. The IBI Extractor floating panel will appear on WhatsApp Web immediately.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">5</div>
+        <div class="step-content">
+          <h3>Click "Start Extraction" — wait — Copy All numbers</h3>
+          <p>In the floating panel, click <strong>▶ Start Extraction</strong>. It will auto-scroll through all 931 members. When it says ✅ Complete, click <strong>📋 Copy All</strong>, then come back here and paste in Step 3 below.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Script copy box -->
+    <div style="background:rgba(0,0,0,0.3);border:1.5px solid var(--cyan-border);border-radius:10px;overflow:hidden">
+      <div style="background:rgba(0,212,240,0.08);padding:10px 16px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--cyan-border);flex-wrap:gap">
+        <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--cyan);letter-spacing:1px">EXTRACTOR SCRIPT — SELECT ALL → COPY → PASTE IN CONSOLE</span>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:4px">
+          <button class="btn btn-primary" onclick="copyConsoleScript()" id="copy-script-btn" style="padding:7px 16px;font-size:12px">📋 Try Auto-Copy</button>
+          <button class="btn btn-outline" onclick="selectScript()" style="padding:7px 16px;font-size:12px">✋ Select All Text</button>
+        </div>
+      </div>
+      <!-- Fully visible selectable textarea — manual copy always works -->
+      <textarea id="console-script-ta" readonly
+        onclick="this.select()"
+        style="width:100%;height:220px;background:rgba(0,0,0,0.4);border:none;color:#a8d8e8;font-family:'IBM Plex Mono',monospace;font-size:11px;padding:14px 16px;resize:none;outline:none;line-height:1.6;cursor:text;box-sizing:border-box"
+      ></textarea>
+      <div style="padding:10px 16px;background:rgba(0,212,240,0.05);border-top:1px solid var(--cyan-border)">
+        <p style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--text-dim)">
+          👆 <strong style="color:var(--text)">Click inside the box above</strong> → it selects all automatically → then press <strong style="color:var(--cyan)">Ctrl+C</strong> to copy
+        </p>
+      </div>
+      <div id="copy-script-status" style="display:none;padding:10px 16px;background:rgba(0,229,160,0.08);border-top:1px solid rgba(0,229,160,0.3)">
+        <p style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--success)">✅ Script copied! Now go to WhatsApp Web → press F12 → click Console tab → type: allow pasting → Enter → Ctrl+V → Enter</p>
+      </div>
+    </div>
+
+    <!-- Console warning note -->
+    <div style="margin-top:14px;padding:12px 16px;background:rgba(255,184,77,0.07);border:1px solid rgba(255,184,77,0.25);border-radius:8px">
+      <p style="font-size:12px;color:var(--warn);font-family:'IBM Plex Mono',monospace;line-height:1.7">
+        ⚠️ <strong>Chrome Console Warning:</strong> When you paste in the console, Chrome may show a warning saying <em>"Don't paste code you don't trust"</em>. You must type the word <strong>allow pasting</strong> first and press Enter, then paste the script and press Enter again.
+      </p>
+    </div>
+
+  </div>
+
+  <!-- STEP 2: GAS SETUP -->
+  <div class="section-label">Step 02 — Connect Google Sheets</div>
+  <div class="card">
+    <div style="margin-bottom:20px">
+      <div class="input-wrap">
+        <label>GOOGLE APPS SCRIPT WEB APP URL</label>
+        <input type="text" id="gas-url" placeholder="https://script.google.com/macros/s/YOUR_DEPLOYMENT_ID/exec" />
+      </div>
+    </div>
+    <div style="margin-bottom:20px">
+      <div class="input-wrap">
+        <label>GROUP NAME (for labeling in Google Sheet)</label>
+        <input type="text" id="group-name" placeholder="eCom Master's Family" value="eCom Master's Family" />
+      </div>
+    </div>
+    <button class="btn btn-outline" onclick="testGASConnection()">🔌 Test Connection</button>
+
+    <!-- GAS Code collapsible -->
+    <div style="margin-top:24px">
+      <div class="collapsible-header" onclick="toggleSection('gas-code')">
+        <h3>📋 Google Apps Script Code — Copy & Deploy</h3>
+        <span class="collapsible-arrow" id="arr-gas-code">▶</span>
+      </div>
+      <div class="collapsible-body" id="gas-code">
+        <p style="font-size:13px;color:var(--text-dim);margin-bottom:14px">1. Go to <strong>script.google.com</strong> → New Project → paste this code → Save → Deploy as Web App (access: Anyone) → copy the URL above.</p>
+        <div style="position:relative">
+          <button class="copy-code-btn" onclick="copyGASCode()">Copy</button>
+          <div class="code-block" id="gas-code-block">
+// ═══════════════════════════════════════════════════
+// IBI Mobile Contact — Google Apps Script Backend
+// India Business International | GSTIN: 33AOLPP8759A2ZO
+// ═══════════════════════════════════════════════════
+
+const SHEET_NAME = "IBI Mobile Contacts";
+const SPREADSHEET_ID = ""; // Leave blank to use active spreadsheet
+
+function doPost(e) {
+  try {
+    var payload = JSON.parse(e.postData.contents);
+    var numbers  = payload.numbers  || [];
+    var source   = payload.source   || "WhatsApp";
+    var group    = payload.groupName|| "Unknown";
+
+    var ss    = SPREADSHEET_ID
+                  ? SpreadsheetApp.openById(SPREADSHEET_ID)
+                  : SpreadsheetApp.getActiveSpreadsheet();
+    var sheet = ss.getSheetByName(SHEET_NAME) || ss.insertSheet(SHEET_NAME);
+
+    // Write headers if sheet is empty
+    if (sheet.getLastRow() === 0) {
+      sheet.appendRow([
+        "S.No", "Mobile (Full)", "Country Code", "Local Number",
+        "Platform Source", "WA Group", "Date Added", "Status"
+      ]);
+      sheet.getRange(1, 1, 1, 8).setFontWeight("bold")
+           .setBackground("#0D1B2A").setFontColor("#00D4F0");
+      sheet.setFrozenRows(1);
+    }
+
+    // Build existing numbers set for dedup check
+    var lastRow = sheet.getLastRow();
+    var existing = new Set();
+    if (lastRow > 1) {
+      sheet.getRange(2, 2, lastRow - 1, 1)
+           .getValues().forEach(r => existing.add(r[0]));
+    }
+
+    var added = 0, duplicates = 0;
+    var today = new Date();
+
+    numbers.forEach(function(raw) {
+      var num = raw.toString().trim();
+      if (!num) return;
+
+      // Normalise: ensure +91 prefix for Indian numbers
+      if (/^[6-9]\d{9}$/.test(num)) num = "+91" + num;
+      if (!/^\+/.test(num))          num = "+"  + num;
+
+      if (existing.has(num)) {
+        duplicates++;
+        return;
+      }
+
+      var countryCode = num.match(/^\+(\d{1,3})/)?.[0] || "";
+      var localNum    = num.replace(/^\+\d{1,3}/, "");
+      var sNo         = sheet.getLastRow(); // auto serial
+
+      sheet.appendRow([
+        sNo, num, countryCode, localNum,
+        source, group,
+        Utilities.formatDate(today, "Asia/Kolkata", "dd-MM-yyyy HH:mm"),
+        "Active"
+      ]);
+      existing.add(num);
+      added++;
+    });
+
+    // Auto-resize columns on first batch
+    if (added > 0) sheet.autoResizeColumns(1, 8);
+
+    return ContentService
+      .createTextOutput(JSON.stringify({
+        success: true, added: added, duplicates: duplicates,
+        total: sheet.getLastRow() - 1
+      }))
+      .setMimeType(ContentService.MimeType.JSON);
+
+  } catch (err) {
+    return ContentService
+      .createTextOutput(JSON.stringify({ success: false, error: err.toString() }))
+      .setMimeType(ContentService.MimeType.JSON);
+  }
+}
+
+// Test GET endpoint
+function doGet(e) {
+  var ss    = SPREADSHEET_ID
+                ? SpreadsheetApp.openById(SPREADSHEET_ID)
+                : SpreadsheetApp.getActiveSpreadsheet();
+  var sheet = ss.getSheetByName(SHEET_NAME);
+  var count = sheet ? Math.max(0, sheet.getLastRow() - 1) : 0;
+  return ContentService
+    .createTextOutput(JSON.stringify({ status: "ok", totalContacts: count }))
+    .setMimeType(ContentService.MimeType.JSON);
+}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 3: PASTE & SYNC -->
+  <div class="section-label">Step 03 — Import & Sync Numbers</div>
+  <div class="card">
+    <div id="status-bar"></div>
+
+    <div class="input-wrap" style="margin-bottom:14px">
+      <label>PASTE EXTRACTED NUMBERS — one per line, or comma-separated</label>
+      <textarea id="numbers-area" placeholder="+91 96554 50319&#10;+91 98765 43210&#10;9876543210&#10;...paste all numbers from the IBI Extractor bookmarklet here"></textarea>
+    </div>
+
+    <div class="progress-wrap" id="progress-wrap" style="display:none">
+      <div class="progress-bar"><div class="progress-fill" id="prog-fill"></div></div>
+      <div class="progress-text" id="prog-text">Processing...</div>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn btn-primary" onclick="syncToSheets()">🚀 Sync to Google Sheets</button>
+      <button class="btn btn-outline" onclick="previewNumbers()">👁 Preview & Count</button>
+      <button class="btn btn-outline" onclick="downloadCSV()">⬇ Download CSV</button>
+      <button class="btn btn-danger" onclick="clearAll()">🗑 Clear</button>
+    </div>
+  </div>
+
+  <!-- PREVIEW TABLE -->
+  <div id="preview-section" style="display:none">
+    <div class="section-label">Preview — Parsed Numbers</div>
+    <div class="card" style="padding:0">
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>S.No</th>
+              <th>Mobile (Full)</th>
+              <th>Country Code</th>
+              <th>Local Number</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody id="preview-tbody"></tbody>
+        </table>
+      </div>
+      <div style="padding:14px 16px;font-size:12px;color:var(--text-dim);border-top:1px solid var(--cyan-border);font-family:'IBM Plex Mono',monospace" id="preview-footer"></div>
+    </div>
+  </div>
+
+  <!-- HISTORY -->
+  <div class="section-label">Sync History</div>
+  <div class="card" id="history-card">
+    <p style="color:var(--text-dim);font-size:13px;font-family:'IBM Plex Mono',monospace">No sync history yet. Import numbers to begin.</p>
+  </div>
+
+  <!-- FOOTER -->
+  <div style="text-align:center;padding:32px 0 0;border-top:1px solid var(--cyan-border);margin-top:40px">
+    <p style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--text-dim)">
+      IBI Mobile Contact · India Business International · GSTIN: 33AOLPP8759A2ZO · Kanyakumari, Tamil Nadu
+    </p>
+    <p style="font-family:'Syne',sans-serif;font-size:12px;color:var(--cyan);margin-top:6px;letter-spacing:1px">eCommerce for the World</p>
+  </div>
+
+</div><!-- /page-wrap -->
+
+<script>
+// ══════════════════════════════════════════════════════
+// IBI Mobile Contact — Frontend Logic
+// ══════════════════════════════════════════════════════
+
+// ── State ──
+const state = {
+  syncHistory: JSON.parse(localStorage.getItem('ibi_sync_history') || '[]'),
+  stats: JSON.parse(localStorage.getItem('ibi_stats') || '{"total":0,"today":0,"dup":0,"groups":0}'),
+  todayKey: new Date().toDateString()
+};
+
+// ── Init ──
+window.addEventListener('DOMContentLoaded', () => {
+  // Populate the visible script textarea immediately
+  const ta = document.getElementById('console-script-ta');
+  if (ta) ta.value = _CONSOLE_SCRIPT;
+  restoreInputs();
+  renderHistory();
+  updateStats();
+  if (getGASUrl()) checkConnection();
+});
+
+// ── Console Script ──
+const _CONSOLE_SCRIPT = `(function(){
+  if(document.getElementById('_ibi_p'))document.getElementById('_ibi_p').remove();
+  var p=document.createElement('div');p.id='_ibi_p';
+  p.style.cssText='position:fixed;top:16px;right:16px;width:355px;max-height:88vh;background:#0D1B2A;border:2px solid #00D4F0;border-radius:14px;z-index:2147483647;overflow:hidden;font-family:system-ui,sans-serif;box-shadow:0 0 50px rgba(0,212,240,0.3);display:flex;flex-direction:column';
+  p.innerHTML='<div style="background:linear-gradient(135deg,#00D4F0,#29ABE2);padding:11px 15px;display:flex;justify-content:space-between;align-items:center;flex-shrink:0"><span style="color:#0D1B2A;font-weight:800;font-size:13px">📱 IBI Mobile Contact Extractor</span><button onclick="document.getElementById(\\'_ibi_p\\').remove()" style="background:rgba(13,27,42,.25);border:none;color:#0D1B2A;width:24px;height:24px;border-radius:50%;cursor:pointer;font-size:14px">✕</button></div><div style="padding:12px 14px;overflow-y:auto;flex:1"><div id="_s" style="background:rgba(0,212,240,.08);border:1px solid rgba(0,212,240,.25);border-radius:8px;padding:9px 12px;color:#00D4F0;font-size:12px;margin-bottom:10px;line-height:1.5">Click ▶ Start Extraction to begin scanning all participants.</div><div style="display:flex;justify-content:space-between;margin-bottom:6px"><span id="_c" style="color:#7B9BAD;font-size:12px;font-family:monospace;font-weight:600">0 numbers found</span><span id="_pr" style="color:#7B9BAD;font-size:11px;font-family:monospace"></span></div><textarea id="_ta" style="width:100%;height:160px;background:rgba(255,255,255,.04);border:1px solid rgba(0,212,240,.2);color:#E8F4F8;font-size:11px;padding:9px;border-radius:8px;resize:none;font-family:monospace;box-sizing:border-box" placeholder="Extracted numbers will appear here..."></textarea><div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px"><button id="_sb" style="grid-column:1/-1;background:linear-gradient(135deg,#00D4F0,#29ABE2);color:#0D1B2A;border:none;padding:11px;border-radius:8px;cursor:pointer;font-weight:800;font-size:14px">▶ Start Extraction</button><button id="_cp_btn" style="background:rgba(0,212,240,.08);color:#00D4F0;border:1px solid rgba(0,212,240,.25);padding:9px;border-radius:8px;cursor:pointer;font-size:12px;font-weight:600">📋 Copy All</button><button id="_dl_btn" style="background:rgba(0,212,240,.08);color:#00D4F0;border:1px solid rgba(0,212,240,.25);padding:9px;border-radius:8px;cursor:pointer;font-size:12px;font-weight:600">⬇ Download CSV</button></div></div>';
+  document.body.appendChild(p);
+  var N=new Set(),run=false,stuck=0,lastN=0;
+  function rx(){
+    var panels=[document.querySelector('[data-testid="group-info-drawer"]'),document.querySelector('[data-testid="contact-info-drawer"]'),document.querySelector('div#app')];
+    var t='';panels.forEach(function(el){if(el)t+=el.innerText+' ';});
+    var r1=/\\+91\\s*[6-9]\\d{4}\\s*\\d{5}/g;
+    var r2=/\\+[1-9]\\d{0,2}\\s*\\d{3,5}\\s*\\d{4,6}/g;
+    var r3=/\\b[6-9]\\d{9}\\b/g;
+    [t.match(r1)||[],t.match(r2)||[],t.match(r3)||[]].flat().forEach(function(n){
+      var c=n.replace(/\\s+/g,'');if(c.length>=10&&c.length<=15)N.add(c);
+    });
+    document.getElementById('_ta').value=Array.from(N).join('\\n');
+    document.getElementById('_c').textContent=N.size+' numbers found';
+  }
+  function getScrollEl(){
+    var candidates=[document.querySelector('[data-testid="group-info-drawer"]'),document.querySelector('[data-testid="contact-info-drawer"]')];
+    for(var i=0;i<candidates.length;i++){
+      var el=candidates[i];if(!el)continue;
+      var divs=el.querySelectorAll('div');
+      for(var j=0;j<divs.length;j++){
+        var s=window.getComputedStyle(divs[j]);
+        if((s.overflow+s.overflowY).match(/auto|scroll/)&&divs[j].scrollHeight>divs[j].clientHeight+100)return divs[j];
+      }
+    }
+    return null;
+  }
+  document.getElementById('_sb').onclick=function(){
+    if(run){run=false;this.textContent='▶ Resume';document.getElementById('_s').textContent='⏸ Paused. Click Resume to continue.';return;}
+    run=true;this.textContent='⏸ Pause';stuck=0;lastN=N.size;
+    document.getElementById('_s').textContent='🔄 Scrolling and extracting... please wait.';
+    (function loop(){
+      if(!run)return;
+      rx();
+      if(N.size===lastN)stuck++;else stuck=0;
+      lastN=N.size;
+      if(stuck>=12){
+        run=false;
+        document.getElementById('_sb').textContent='🔄 Re-Scan';
+        document.getElementById('_s').innerHTML='✅ <strong>Extraction complete!</strong> Found <strong>'+N.size+'</strong> numbers. Click 📋 Copy All.';
+        document.getElementById('_pr').textContent='';
+        return;
+      }
+      var sc=getScrollEl();
+      if(sc)sc.scrollTop+=280;else window.scrollBy(0,280);
+      document.getElementById('_pr').textContent='progress: '+(12-stuck)+'/12';
+      setTimeout(loop,700);
+    })();
+  };
+  document.getElementById('_cp_btn').onclick=function(){
+    var ta=document.getElementById('_ta');ta.select();
+    try{navigator.clipboard.writeText(ta.value).then(function(){document.getElementById('_s').textContent='📋 Copied '+N.size+' numbers to clipboard!';})} 
+    catch(e){document.execCommand('copy');document.getElementById('_s').textContent='📋 Copied '+N.size+' numbers!';}
+  };
+  document.getElementById('_dl_btn').onclick=function(){
+    var a=Array.from(N);
+    var csv='S.No,Mobile Number,Source\\n'+a.map(function(n,i){return (i+1)+','+n+',WhatsApp Group';}).join('\\n');
+    var bl=new Blob([csv],{type:'text/csv'});
+    var el=document.createElement('a');el.href=URL.createObjectURL(bl);
+    el.download='IBI_Contacts_'+new Date().toISOString().slice(0,10)+'.csv';el.click();
+  };
+  rx();
+  if(N.size>0)document.getElementById('_s').textContent='Found '+N.size+' visible numbers already. Click ▶ Start Extraction to scan all.';
+})();`;
+
+function selectScript() {
+  const ta = document.getElementById('console-script-ta');
+  ta.focus();
+  ta.select();
+  // Also try clipboard
+  navigator.clipboard.writeText(ta.value).then(() => {
+    document.getElementById('copy-script-status').style.display = 'block';
+    const btn = document.getElementById('copy-script-btn');
+    btn.textContent = '✅ Copied!';
+    setTimeout(() => { btn.textContent = '📋 Try Auto-Copy'; }, 4000);
+  }).catch(() => {});
+}
+
+
+  navigator.clipboard.writeText(_CONSOLE_SCRIPT).then(() => {
+    const btn = document.getElementById('copy-script-btn');
+    btn.textContent = '✅ Copied!';
+    btn.style.background = 'linear-gradient(135deg,#00E5A0,#00B87A)';
+    setTimeout(() => { btn.textContent = '📋 Copy Extractor Script'; btn.style.background = ''; }, 5000);
+    document.getElementById('copy-script-status').style.display = 'block';
+    setTimeout(() => document.getElementById('copy-script-status').style.display = 'none', 12000);
+  }).catch(() => {
+    // Fallback
+    const ta = document.createElement('textarea');
+    ta.value = _CONSOLE_SCRIPT;
+    ta.style.cssText = 'position:fixed;top:0;left:0;opacity:0.01;width:1px;height:1px';
+    document.body.appendChild(ta);
+    ta.focus(); ta.select();
+    document.execCommand('copy');
+    ta.remove();
+    document.getElementById('copy-script-status').style.display = 'block';
+  });
+}
+
+// ── Parse numbers from textarea ──
+function parseNumbers(raw) {
+  return raw
+    .split(/[\n,;\t]+/)
+    .map(s => s.trim().replace(/\s+/g, ''))
+    .filter(s => s.length >= 10)
+    .map(n => {
+      if (/^[6-9]\d{9}$/.test(n)) return '+91' + n;
+      if (/^\d{10,12}$/.test(n)) return '+' + n;
+      return n;
+    })
+    .filter(n => /^\+?\d{10,15}$/.test(n));
+}
+
+// ── Preview ──
+function previewNumbers() {
+  const raw = document.getElementById('numbers-area').value;
+  const nums = parseNumbers(raw);
+  const seen = new Set();
+  const rows = [];
+
+  nums.forEach((n, i) => {
+    const isDup = seen.has(n);
+    if (!isDup) seen.add(n);
+    const cc = n.match(/^\+(\d{1,3})/)?.[0] || '';
+    const local = n.replace(/^\+\d{1,3}/, '');
+    rows.push({ idx: i + 1, full: n, cc, local, dup: isDup });
+  });
+
+  const tbody = document.getElementById('preview-tbody');
+  tbody.innerHTML = rows.slice(0, 200).map(r => `
+    <tr>
+      <td>${r.idx}</td>
+      <td style="color:var(--cyan)">${r.full}</td>
+      <td>${r.cc}</td>
+      <td>${r.local}</td>
+      <td><span class="badge ${r.dup ? 'badge-dup' : 'badge-new'}">${r.dup ? 'Duplicate' : 'New'}</span></td>
+    </tr>
+  `).join('');
+
+  const uniq = rows.filter(r => !r.dup).length;
+  const dup  = rows.filter(r => r.dup).length;
+  document.getElementById('preview-footer').textContent =
+    `Showing ${Math.min(rows.length, 200)} of ${rows.length} numbers · ${uniq} unique · ${dup} duplicates · ${rows.length > 200 ? '(first 200 shown)' : ''}`;
+
+  document.getElementById('preview-section').style.display = 'block';
+  document.getElementById('preview-section').scrollIntoView({ behavior: 'smooth' });
+}
+
+// ── Download CSV ──
+function downloadCSV() {
+  const raw  = document.getElementById('numbers-area').value;
+  const nums = parseNumbers(raw);
+  if (!nums.length) { showStatus('No valid numbers to download.', 'warn'); return; }
+
+  const seen = new Set();
+  const rows = [['S.No', 'Mobile (Full)', 'Country Code', 'Local Number', 'Source', 'Group Name', 'Date Added']];
+  let i = 1;
+  nums.forEach(n => {
+    if (seen.has(n)) return;
+    seen.add(n);
+    const cc    = n.match(/^\+(\d{1,3})/)?.[0] || '';
+    const local = n.replace(/^\+\d{1,3}/, '');
+    const group = document.getElementById('group-name').value || 'WhatsApp Group';
+    rows.push([i++, n, cc, local, 'WhatsApp', group, new Date().toLocaleDateString('en-IN')]);
+  });
+
+  const csv  = rows.map(r => r.join(',')).join('\n');
+  const blob = new Blob([csv], { type: 'text/csv;charset=utf-8' });
+  const a    = document.createElement('a');
+  a.href     = URL.createObjectURL(blob);
+  a.download = `IBI_Mobile_Contact_${new Date().toISOString().slice(0,10)}.csv`;
+  a.click();
+  showStatus(`✅ Downloaded ${rows.length - 1} contacts as CSV`, 'success');
+}
+
+// ── Sync to GAS ──
+async function syncToSheets() {
+  const gasUrl = getGASUrl();
+  if (!gasUrl) { showStatus('⚠️ Please enter your Google Apps Script URL in Step 2 first.', 'warn'); return; }
+
+  const raw  = document.getElementById('numbers-area').value;
+  const nums = parseNumbers(raw);
+  if (!nums.length) { showStatus('⚠️ No valid numbers found. Paste extracted numbers first.', 'warn'); return; }
+
+  const group = document.getElementById('group-name').value || 'WhatsApp Group';
+
+  showStatus(`🚀 Syncing ${nums.length} numbers to Google Sheets...`, 'info');
+  showProgress(true, 0, `Preparing ${nums.length} numbers...`);
+
+  // Send in batches of 200
+  const BATCH = 200;
+  let added = 0, dup = 0, total = 0;
+
+  for (let i = 0; i < nums.length; i += BATCH) {
+    const batch = nums.slice(i, i + BATCH);
+    const pct   = Math.round((i / nums.length) * 100);
+    showProgress(true, pct, `Batch ${Math.floor(i/BATCH)+1}/${Math.ceil(nums.length/BATCH)} — ${i}/${nums.length} sent`);
+
+    try {
+      const res = await fetch(gasUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'text/plain' },
+        body: JSON.stringify({ numbers: batch, source: 'WhatsApp', groupName: group })
+      });
+      const data = await res.json();
+      if (data.success) { added += data.added; dup += data.duplicates; total = data.total; }
+    } catch (err) {
+      showStatus(`❌ Error: ${err.message}. Check GAS URL and deployment settings.`, 'error');
+      showProgress(false);
+      return;
+    }
+  }
+
+  showProgress(true, 100, 'Complete!');
+  setTimeout(() => showProgress(false), 1500);
+
+  // Update state
+  state.stats.total = total;
+  state.stats.today = (state.stats.today || 0) + added;
+  state.stats.dup   = (state.stats.dup || 0) + dup;
+  state.stats.groups = (state.stats.groups || 0) + (added > 0 ? 1 : 0);
+  localStorage.setItem('ibi_stats', JSON.stringify(state.stats));
+
+  const entry = {
+    ts: new Date().toLocaleString('en-IN'),
+    group, added, dup, total,
+    nums: nums.length
+  };
+  state.syncHistory.unshift(entry);
+  state.syncHistory = state.syncHistory.slice(0, 20);
+  localStorage.setItem('ibi_sync_history', JSON.stringify(state.syncHistory));
+
+  updateStats();
+  renderHistory();
+  showStatus(`✅ Sync complete! Added: ${added} · Duplicates skipped: ${dup} · Total in sheet: ${total}`, 'success');
+}
+
+// ── Test GAS ──
+async function testGASConnection() {
+  const url = getGASUrl();
+  if (!url) { showStatus('⚠️ Enter GAS URL first.', 'warn'); return; }
+  showStatus('🔌 Testing connection...', 'info');
+  try {
+    const res  = await fetch(url);
+    const data = await res.json();
+    if (data.status === 'ok') {
+      document.getElementById('db-status').textContent = `⬤ Connected · ${data.totalContacts} contacts`;
+      document.getElementById('db-status').style.color = 'var(--success)';
+      showStatus(`✅ Connected! Google Sheet has ${data.totalContacts} contacts.`, 'success');
+    }
+  } catch (e) {
+    showStatus(`❌ Connection failed: ${e.message}`, 'error');
+  }
+}
+
+async function checkConnection() {
+  const url = getGASUrl();
+  if (!url) return;
+  try {
+    const res  = await fetch(url);
+    const data = await res.json();
+    if (data.status === 'ok') {
+      document.getElementById('db-status').textContent = `⬤ Connected · ${data.totalContacts}`;
+      document.getElementById('db-status').style.color = 'var(--success)';
+      if (data.totalContacts > 0) state.stats.total = data.totalContacts;
+      updateStats();
+    }
+  } catch (_) {}
+}
+
+// ── History ──
+function renderHistory() {
+  const card = document.getElementById('history-card');
+  if (!state.syncHistory.length) {
+    card.innerHTML = '<p style="color:var(--text-dim);font-size:13px;font-family:\'IBM Plex Mono\',monospace">No sync history yet. Import numbers to begin.</p>';
+    return;
+  }
+  card.innerHTML = `
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Date & Time</th><th>Group</th><th>Submitted</th><th>Added</th><th>Duplicates</th><th>Sheet Total</th></tr></thead>
+        <tbody>
+          ${state.syncHistory.map(h => `
+            <tr>
+              <td>${h.ts}</td>
+              <td style="color:var(--cyan)">${h.group}</td>
+              <td>${h.nums}</td>
+              <td><span class="badge badge-new">+${h.added}</span></td>
+              <td>${h.dup > 0 ? `<span class="badge badge-dup">${h.dup}</span>` : '—'}</td>
+              <td style="font-weight:600">${h.total}</td>
+            </tr>
+          `).join('')}
+        </tbody>
+      </table>
+    </div>
+  `;
+}
+
+// ── UI Helpers ──
+function showStatus(msg, type = 'info') {
+  const bar = document.getElementById('status-bar');
+  bar.textContent = msg;
+  bar.className = type === 'success' ? 'success' : type === 'error' ? 'error' : type === 'warn' ? 'warn' : '';
+  bar.style.display = 'block';
+  if (type === 'success') setTimeout(() => bar.style.display = 'none', 6000);
+}
+
+function showProgress(show, pct = 0, txt = '') {
+  const wrap = document.getElementById('progress-wrap');
+  wrap.style.display = show ? 'block' : 'none';
+  document.getElementById('prog-fill').style.width = pct + '%';
+  document.getElementById('prog-text').textContent = txt;
+}
+
+function updateStats() {
+  document.getElementById('stat-total').textContent  = state.stats.total  || 0;
+  document.getElementById('stat-new').textContent    = state.stats.today  || 0;
+  document.getElementById('stat-dup').textContent    = state.stats.dup    || 0;
+  document.getElementById('stat-groups').textContent = state.stats.groups || 0;
+}
+
+function clearAll() {
+  if (!confirm('Clear all numbers from the input area?')) return;
+  document.getElementById('numbers-area').value = '';
+  document.getElementById('preview-section').style.display = 'none';
+}
+
+function getGASUrl() {
+  const url = document.getElementById('gas-url').value.trim();
+  if (url && url !== localStorage.getItem('ibi_gas_url')) {
+    localStorage.setItem('ibi_gas_url', url);
+  }
+  return url;
+}
+
+function restoreInputs() {
+  const savedUrl   = localStorage.getItem('ibi_gas_url');
+  const savedGroup = localStorage.getItem('ibi_group_name');
+  if (savedUrl)   document.getElementById('gas-url').value    = savedUrl;
+  if (savedGroup) document.getElementById('group-name').value = savedGroup;
+  document.getElementById('gas-url').addEventListener('change', () => {
+    localStorage.setItem('ibi_gas_url', document.getElementById('gas-url').value.trim());
+  });
+  document.getElementById('group-name').addEventListener('change', () => {
+    localStorage.setItem('ibi_group_name', document.getElementById('group-name').value.trim());
+  });
+}
+
+function toggleSection(id) {
+  const body = document.getElementById(id);
+  const arr  = document.getElementById('arr-' + id);
+  body.classList.toggle('open');
+  arr.classList.toggle('open');
+}
+
+function copyBookmarkletCode() {
+  const code = window._bmRawCode;
+  if (!code) { alert('Please wait for the page to finish loading, then try again.'); return; }
+  navigator.clipboard.writeText(code).then(() => {
+    const btn = document.getElementById('copy-bm-btn');
+    btn.textContent = '✅ Code Copied!';
+    btn.style.background = 'var(--success)';
+    setTimeout(() => { btn.textContent = '📋 Copy IBI Extractor Code'; btn.style.background = ''; }, 4000);
+    document.getElementById('bm-copy-status').style.display = 'block';
+    setTimeout(() => document.getElementById('bm-copy-status').style.display = 'none', 10000);
+  }).catch(() => {
+    // Fallback for browsers that block clipboard
+    const ta = document.createElement('textarea');
+    ta.value = code;
+    ta.style.cssText = 'position:fixed;top:0;left:0;opacity:0';
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand('copy');
+    ta.remove();
+    document.getElementById('bm-copy-status').style.display = 'block';
+  });
+}
+
+
+function copyGASCode() {
+  const code = document.getElementById('gas-code-block').innerText;
+  navigator.clipboard.writeText(code).then(() => {
+    const btn = document.querySelector('.copy-code-btn');
+    btn.textContent = '✅ Copied!';
+    setTimeout(() => btn.textContent = 'Copy', 2000);
+  });
+}
+}
+</script>
+</body>
+</html>
